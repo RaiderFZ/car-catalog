@@ -18,6 +18,16 @@ export const getCars = async (
         params.set("_order", sort)
     }
 
+     try {
     const response = await axios.get<CarApiResponse>(`${BASE_URL}/cars?${params.toString()}`);
     return response.data;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error("API error:", error.message);
+            throw new Error("Не удалось загрузить автомобили с сервера");
+        } else {
+            console.error("API error (неизвестный тип):", error);
+            throw new Error("Произошла неизвестная ошибка при загрузке");
+        }
+    }
 }

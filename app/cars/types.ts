@@ -15,3 +15,5 @@ export interface CarApiResponse {
         last_page: number;
     }
 }
+
+export type SortOrder = "asc" | "desc";
