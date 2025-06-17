@@ -1,6 +1,6 @@
-import axios from "axios";
+// import axios from "axios";
 
-import {CarApiResponse} from "@/app/cars/types";
+// import {CarApiResponse} from "@/app/cars/types";
 
 // const BASE_URL = process.env.API_URL ?? "https://plex-parser.ru-rating.ru";
 
