@@ -22,6 +22,7 @@ function CarCardComponent({ car, priority = false }: Props) {
             height={300}
             loading={priority ? "eager" : "lazy"}
             sizes="(max-width: 768px) 100vw, 400px"
+            unoptimized
             onError={() => console.error(`Failed to load image: ${car.images?.image?.[0]}`)}
           />
         ) : (

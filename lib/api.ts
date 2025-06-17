@@ -36,7 +36,7 @@
 // }
 
 export const getCars = async (page = 1, sort?: "asc" | "desc") => {
-  const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://plex-parser.ru-rating.ru";
 
   const params = new URLSearchParams({
     _limit: "12",
