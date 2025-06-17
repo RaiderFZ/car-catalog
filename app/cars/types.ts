@@ -12,6 +12,6 @@ export interface CarApiResponse {
     data: Car[];
     meta: {
         page: number;
-        totalPages: number;
+        last_page: number;
     }
 }

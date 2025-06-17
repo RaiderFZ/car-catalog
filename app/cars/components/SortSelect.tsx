@@ -21,7 +21,7 @@ const SortSelect = () => {
             params.delete("sort")
         }
 
-        router.push(`/cars?{params.toString()}`)
+        router.push(`/cars?${params.toString()}`)
     }
 
     return (

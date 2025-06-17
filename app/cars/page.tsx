@@ -1,5 +1,6 @@
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { getCars } from "@/lib/api";
 import SortSelect from "./components/SortSelect";
@@ -10,16 +11,37 @@ import styles from "./cars.module.css";
 const { container, title, controls, cardsGrid, pagination, card, cardImage, cardContent, cardTitle, cardText } = styles;
 
 interface Props {
-    searchParams: {
-        sort?: "asc" | "desc";
-    };
+    searchParams?: Record<string, string | string[] | undefined>;
 }
 
 const CarsPage = async ({searchParams = {}}: Props) => {
-    const sort = searchParams.sort || undefined;
-    const response = await getCars(1, sort);
-    const cars = response.data;
+    const resolvedParams = await searchParams;
     
+    const validParams: Record<string, string> = {};
+    for (const [key, value] of Object.entries(resolvedParams)) {
+        if (typeof value === "string") {
+            validParams[key] = value;
+        } else if (Array.isArray(value)) {
+            validParams[key] = value.join(","); // Join array into a string
+        }
+    }
+
+    const params = new URLSearchParams(validParams);
+    
+    const rawSort = params.get("sort");
+    const rawPage = params.get("page");
+
+    const sort = rawSort === "asc" || rawSort === "desc" ? rawSort : undefined;
+    const currentPage = Number(rawPage) || 1;
+
+    const response = await getCars(currentPage, sort);
+    const cars = response.data;
+    const meta = response.meta;
+    const totalPages = meta.last_page
+    
+    const cleanSearchParams: Record<string, string> = {};
+    if (sort) cleanSearchParams.sort = sort;
+
     return (
         <main className={container}>
             <h1 className={title}>Список автомобилей</h1>
@@ -61,9 +83,34 @@ const CarsPage = async ({searchParams = {}}: Props) => {
             </div>
 
             <div className={pagination}>
-                <button>Назад</button>
-                <span>Страница 1 из N</span>
-                <button>Вперед</button>
+                <Link 
+                    href={{
+                        pathname: "/cars",
+                        query: {
+                            ...cleanSearchParams,
+                            page: String(Math.max(1, currentPage - 1)),
+                        },
+                    }}
+                >
+                    <button disabled={currentPage === 1}>
+                        Назад
+                    </button>
+                </Link>
+                
+                <span>Страница {currentPage} из {totalPages}</span>
+
+                <Link
+                    href={{
+                        pathname: "/cars",
+                        query: {
+                            ...cleanSearchParams,
+                            page: String(Math.min(totalPages, currentPage + 1)),
+                        },
+                    }}
+                >
+                    <button disabled={currentPage === totalPages}>Вперед</button>
+                </Link>
+                
             </div>
         </main>
     )
