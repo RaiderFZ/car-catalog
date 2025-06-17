@@ -2,7 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['plex-parser.ru-rating.ru'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ru-msk-dr3-1.store.cloud.mts.ru",
+        pathname: "**", // разрешаем любые пути
+      },
+    ],
   },
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition, memo } from "react";
 import Spinner from "../Spinner";
 import { updateSearchParams } from "../utils";
 
@@ -46,4 +46,4 @@ const Pagination = ({ currentPage, totalPages, sort }: Props) => {
   );
 }
 
-export default Pagination;
+export default memo(Pagination);

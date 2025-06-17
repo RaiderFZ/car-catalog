@@ -1,7 +1,7 @@
 'use client';
 
 import {useSearchParams, useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition, useCallback } from "react";
 
 import Spinner from '../Spinner';
 import { updateSearchParams } from "../utils";
@@ -16,7 +16,7 @@ const SortSelect = () => {
     const [isPending, startTransition] = useTransition();
     const currentSort = searchParams.get("sort") || "";
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
         const newSort = e.target.value;
 
         const query = updateSearchParams(searchParams, {
@@ -27,7 +27,7 @@ const SortSelect = () => {
         startTransition(() => {
             router.push(`/cars?${query}`);
         });
-    }
+    }, [searchParams, router]);
 
     return (
         <>
