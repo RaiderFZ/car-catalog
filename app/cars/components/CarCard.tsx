@@ -20,6 +20,7 @@ function CarCardComponent({ car, priority = false }: Props) {
             className={cardImage}
             width={400}
             height={300}
+            unoptimized
             priority={priority}
             sizes="(max-width: 768px) 100vw, 400px"
           />
