@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "ru-msk-dr3-1.store.cloud.mts.ru",
-        pathname: "**", // разрешаем любые пути
+        pathname: "/images/**",
       },
     ],
   },

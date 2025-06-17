@@ -20,9 +20,9 @@ function CarCardComponent({ car, priority = false }: Props) {
             className={cardImage}
             width={400}
             height={300}
-            unoptimized
-            priority={priority}
+            loading={priority ? "eager" : "lazy"}
             sizes="(max-width: 768px) 100vw, 400px"
+            onError={() => console.error(`Failed to load image: ${car.images?.image?.[0]}`)}
           />
         ) : (
           <div className={cardImage}>Нет фото</div>

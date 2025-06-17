@@ -2,7 +2,7 @@ import axios from "axios";
 
 import {CarApiResponse} from "@/app/cars/types";
 
-const BASE_URL = "https://plex-parser.ru-rating.ru";
+const BASE_URL = process.env.API_URL || "https://plex-parser.ru-rating.ru";
 
 export const getCars = async (
     page = 1,
@@ -19,7 +19,10 @@ export const getCars = async (
     }
 
      try {
-    const response = await axios.get<CarApiResponse>(`${BASE_URL}/cars?${params.toString()}`);
+    const response = await axios.get<CarApiResponse>(`${BASE_URL}/cars?${params.toString()}`, {
+        timeout: 10000
+    });
+    console.log("API response:", response.data);
     return response.data;
     } catch (error: unknown) {
         if (error instanceof Error) {
