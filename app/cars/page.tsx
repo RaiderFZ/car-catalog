@@ -1,31 +1,31 @@
-import { getCars } from "@/lib/api";
+
 import Image from "next/image";
+
+import { getCars } from "@/lib/api";
+import SortSelect from "./components/SortSelect";
 
 import { Car } from "./types";
 
 import styles from "./cars.module.css";
-const { container, title, controls, sortSelect, cardsGrid, pagination, card, cardImage, cardContent, cardTitle, cardText } = styles;
+const { container, title, controls, cardsGrid, pagination, card, cardImage, cardContent, cardTitle, cardText } = styles;
 
-const CarsPage = async () => {
-    const response = await getCars(1);
+interface Props {
+    searchParams: {
+        sort?: "asc" | "desc";
+    };
+}
+
+const CarsPage = async ({searchParams = {}}: Props) => {
+    const sort = searchParams.sort || undefined;
+    const response = await getCars(1, sort);
     const cars = response.data;
-
-
     
     return (
         <main className={container}>
             <h1 className={title}>Список автомобилей</h1>
 
             <div className={controls}>
-                <select className={sortSelect}>
-                    <option value="">Без сортировки</option>
-                    <option value="asc">
-                        Цена: по возрастанию
-                    </option>
-                    <option value="desc">
-                        Цена: по убыванию
-                    </option>
-                </select>
+                <SortSelect/>
             </div>
 
             <div className={cardsGrid}>

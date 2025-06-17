@@ -1,10 +1,7 @@
-import CarsPage from "./cars/page";
-
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
-    <div >
-      <CarsPage></CarsPage>
-    </div>
+      redirect("/cars")
   );
 }
