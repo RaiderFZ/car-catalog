@@ -1,4 +1,4 @@
-// app/cars/page.tsx
+
 import CarsLayout from "./components/CarsLayout";
 
 import {prepareCarsData} from './utils';
